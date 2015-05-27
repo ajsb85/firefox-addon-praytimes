@@ -306,7 +306,7 @@ PrayTimes.Options = function() {
 	// initialize time zone list in options window
 	this.initTimeZoneList = function()
 	{
-		var halfHours = Array(-3,3,4,5,6,9);
+		var halfHours = Array(-4,-3,3,4,5,6,9);
 		var timeZoneList = document.getElementById('time-zone-list');
 		PrayTimes.misc.removeChildrenOfNode(timeZoneList);
 		var row = document.createElement('menupopup');
