@@ -1,8 +1,9 @@
 
 // Pray Times! - Options
 // By: Hamid Zarrabi-Zadeh
+// Contributor:
+//  Alexander Salas <a.salas@ieee.org>
 // Licensed under GPL
-
 
 PrayTimes.Options = function() {
 
