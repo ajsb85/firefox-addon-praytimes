@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://praytimes/content/css/azan.css" type="text/css"?>
+<?xml-stylesheet href="chrome://praytimes/content/css/button.css" type="text/css"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://praytimes/locale/praytimes.dtd">
+
+<overlay id="azan-overlay" 
+			xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	        xmlns:html="http://www.w3.org/1999/xhtml">
+
+	<script type="application/x-javascript" src="chrome://praytimes/content/namespace.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/preference.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/misc.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/prayTime.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/main.js" />
+
+	<statusbar id="status-bar">
+		<statusbarpanel id="azan-display" 
+			label="Pray Times!"
+			context="azan-contextmenu"
+			tooltip="azan-tooltip"
+			hidden="true"
+			onclick="PrayTimes.main.azanContextMenu(event)"
+			class="statusbarpanel-iconic-text"
+			src="chrome://praytimes/content/icons/icon-status.png">
+		</statusbarpanel>
+	</statusbar>
+	
+	<toolbarpalette id="BrowserToolbarPalette">
+		<toolbarbutton id="azan-button"
+			label="Pray Times!"
+			context="azan-contextmenu"
+			tooltip="azan-tooltip"
+			onclick="PrayTimes.main.azanContextMenu(event)"
+			class="toolbarbutton-1 chromeclass-toolbar-additional custombutton">
+            <vbox align="center">
+                <image class="toolbarbutton-icon"/>
+                <label class="toolbarbutton-text" crop="right" flex="1"/>
+            </vbox>
+            <label id="azan-button-display" hidden="true"/>
+        </toolbarbutton>
+	</toolbarpalette>
+	
+	<popupset>
+		<menupopup id="azan-contextmenu" position="before_end">
+			<menuitem label="Options..." style="font-weight: bold;" oncommand="PrayTimes.misc.openDialogWindow('options');"/>
+			<menuitem label="Monthly Timetable..."  oncommand="if (PrayTimes.prefs.getStrPref('location') != '') PrayTimes.misc.openDialogWindow('monthly');"/>
+			<menuitem label="Qibla Direction..."  oncommand="PrayTimes.misc.openQiblaWindow();"/>
+			<menuseparator/>
+			<menuitem id="playAzan" label="Play Adhan" oncommand="PrayTimes.misc.playSoundPressed();"/>
+			<menuitem id="stop" label="Stop Sound" oncommand="PrayTimes.misc.stopSoundPressed();"/>
+			<menuseparator/>
+			<menu id="azan-showtimes" label="Display Prayer Times">
+				<menupopup onpopupshowing="PrayTimes.main.initPopupMenu();">
+					<menuitem label="Time" oncommand="PrayTimes.main.updateShowTimes();"/>
+				</menupopup>
+			</menu>
+			<menuseparator/>
+			<menuitem label="Send Comment..." oncommand="PrayTimes.misc.openDialogWindow('comment');"/>
+			<menuitem label="About Pray Times!" oncommand="PrayTimes.misc.openDialogWindow('about');"/>
+		</menupopup>
+	</popupset>
+
+	<window id="main-window">
+
+		<tooltip id="azan-tooltip"
+			onpopupshowing="PrayTimes.main.fillTooltip();" 
+			noautohide="true" 
+			orient="vertical">
+			<vbox class="tooltip">
+				<vbox id="tooltipTimes" class="tooltip-wrapper" >
+					<label id="tooltip-day" class="tooltip-day" hidden="true" value=""/>
+					<label id="tooltip-title" class="tooltip-title" value=""/>
+					<vbox id="tooltip-azan-times">
+					<hbox> 
+						<!-- To be filled by the program -->
+					</hbox>
+					</vbox>
+				</vbox>
+				<vbox id="tooltipTimeLeft" class="tooltip-wrapper" >
+					<label id="tooltip-next-azan-title" class="tooltip-title" value=""/>
+					<label id="tooltip-next-azan" value=""/>
+				</vbox>
+			</vbox>
+		</tooltip>
+		
+		<popupset>
+			<html:iframe id="soundFrame" class="sound-object" src="chrome://praytimes/content/sound/soundFrame.html"/>
+		</popupset>
+
+	</window>
+
+</overlay>

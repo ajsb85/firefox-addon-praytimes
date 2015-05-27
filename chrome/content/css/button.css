@@ -1,0 +1,30 @@
+/* 
+	Pray Times! 
+	Button Style Sheet 
+	Hamid Zarrabi-Zadeh
+*/
+
+/* ----------------- button ----------------- */
+
+#azan-button {
+	list-style-image: url('chrome://praytimes/content/icons/icon-16.png');
+}
+
+[iconsize=small] #azan-button {
+	list-style-image: url('chrome://praytimes/content/icons/icon-16.png');
+}
+
+#azan-button {
+    -moz-box-align: center;
+    -moz-box-orient: horizontal;
+}
+
+#azan-button .toolbarbutton-icon {
+    -moz-margin-end: 0;
+}
+
+#azan-button[playazan="true"] label {
+	font-weight: bold;
+	color: #0E683A;
+}
+

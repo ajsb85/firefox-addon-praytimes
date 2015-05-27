@@ -1,0 +1,192 @@
+/* 
+	Pray Times! 
+	Main Style Sheet 
+	Hamid Zarrabi-Zadeh
+*/
+
+/* ----------------- tooltip -----------------*/ 
+
+#azan-tooltip {
+	padding: 3px;
+}
+.tooltip {
+	padding: 0;
+	margin: 0;
+}
+.tooltip-wrapper {
+	padding: 0;
+	margin: 0 0 2px 0;
+}
+.tooltip-title {
+	margin: 3px 0;
+	font-weight: bold;
+	text-align: center;
+	padding: 2px 7px;
+	background: #DC7118 url('chrome://praytimes/content/img/title-bg.png') repeat-x 0 -5px;
+	border: 1px solid #DC7118;
+	text-shadow: 0px 0 1px #333; 
+	-moz-border-radius: 3px;
+	color: white;
+}
+.tooltip-day {
+	font-weight: bold;
+	margin-top: 2px;
+	text-align: center;
+	border: 0;
+}
+.tooltip-title-1 {
+	margin: 3px 0;
+	text-align: center;
+	padding: 1px 7px;
+	font-weight: bold;
+	border-bottom: 2px solid #E4CFA6;
+	border-bottom: 2px solid #79b;
+}
+.tooltip-day-1 {
+	font-weight: bold;
+	margin: 2px 0;
+	text-align: center;
+	background-color: #D5E0EC;
+	border-top: 1px solid #bbf;
+	border-bottom: 1px solid #bbf;
+	color: black;
+}
+.tooltip-azan-time {
+	-moz-padding-start: 20px;
+}
+.tooltip-highlight {
+	color: #DC7324;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff; 
+}
+#tooltip-next-azan {
+	text-align: center;
+}
+
+/*
+
+.tooltip-title {
+	margin-top: 0px;
+	font-weight: bold;
+	border-bottom: 2px solid #E4CFA6;
+}
+
+.tooltip-shade {
+	background-color: #F1F1F1;
+}
+
+#azan-tooltip {
+	padding: 1px;
+}
+
+.tooltip {
+	padding: 2px;
+	background-color: white;
+	color: black;
+}
+*/
+
+
+/* ----------------- status -----------------*/ 
+
+
+#azan-display[playazan="true"] {
+	font-weight: bold;
+	color: #0E683A;
+}
+
+#azan-display[chromedir="rtl"] {
+	font-weight: bold;
+	color: lightblue;
+}
+
+
+/* ----------------- etc -----------------*/ 
+
+.sound-object {
+	min-height: 0px; 
+	max-height: 0px; 
+	min-width: 0px; 
+	max-width: 0px; 
+	height: 0px; 
+	width: 0px;
+	border: 0px;
+}
+
+
+/* ----------------- dialogs -----------------*/ 
+ 
+.window-header {
+	font-weight: bold;
+	background-color: white;
+	color: black;
+	padding: 10px;
+	margin: 0px;
+	border-bottom: 2px groove ThreeDFace;
+}
+
+.window-content {
+	padding: 10px;
+}
+
+.window-footer {
+	border-top: 2px groove ThreeDFace;
+	padding: 10px;
+}
+
+.button-spacer {
+	margin-left: 25px;
+}
+
+.about-header {
+	font-size: 150%;
+	font-weight: bold;
+	color: #0E683A; 
+}
+
+.about-image {
+	margin-top: 6px; 
+	-moz-margin-start: 2px; 
+	-moz-margin-end: 12px;
+}
+
+.remark {
+	color: #999999;
+}
+
+.azan-label {
+	width: 33pt;
+}
+
+.comment-label {
+	width: 33pt;
+	text-align: right;
+}
+
+.azan-link {
+	cursor: pointer;
+	color: #0000BB;
+}
+
+
+/* ----------------- timetable -----------------*/ 
+
+.timetable-item {
+	width: 40pt;
+	text-align: center;
+}
+
+#timetable-title {
+	margin: 10px;
+	font-weight: bold;
+	font-size: 140%;
+	color: #0E683A;
+	width: 140pt;
+	text-align: center;
+}
+
+.timetable-arrow {
+	cursor: pointer;
+}
+
+

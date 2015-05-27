@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://praytimes/content/css/azan.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://praytimes/locale/praytimes.dtd">
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        persist="screenX, screenY"   
+        onload="document.getElementById('comment-sender-name').focus();"
+        title="Pray Times!: Contact">
+
+	<script type="application/x-javascript" src="chrome://praytimes/content/namespace.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/preference.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/options.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/ajax.js" />
+
+
+	<vbox class="window-content" flex="1">
+
+			<grid>
+			<rows>
+				<row align="center">
+					<label class="comment-label" value="Name:"/>
+					<hbox align="center">
+						<textbox size="20" id="comment-sender-name" />
+					</hbox>
+				</row>
+
+				<row align="center">
+					<label class="comment-label" value="Email:"/>
+					<textbox size="35" id="comment-sender-email" />
+					<label class="remark" value="(optional)"/>
+				</row>
+
+				<row align="center">
+					<label class="comment-label" value="Subject:"/>
+					<textbox size="35" id="comment-subject" />
+					<label class="remark" value="(optional)"/>
+				</row>
+
+			</rows>
+			</grid>
+		
+		<groupbox orient="vertical">
+			<caption label="Comments"/>
+			<row align="top">
+				<textbox id="comment-text" rows="20" multiline="true" style="width: 240pt; height: 120pt; margin-bottom: 7px;" flex="1"/>
+			</row>
+		</groupbox>
+
+		<hbox align="center">
+			<spacer flex="1"/>
+			<image id="loadingImage" src="" />
+			<label id="loadingText" value="" />
+			<spacer flex="1"/>
+			<button label="Submit" id="submit-button" default="true" oncommand="PrayTimes.options.submitCommentForm();"/>
+			<button label="Close" id="close-button" hidden="false" oncommand="window.close();"/>
+		</hbox>
+	</vbox>
+
+
+	<keyset id="ff-keys">
+		<key keycode="VK_ESCAPE" oncommand="window.close();"/>
+	</keyset>
+
+</window>
+

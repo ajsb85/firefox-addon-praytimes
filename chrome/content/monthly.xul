@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://praytimes/content/css/azan.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://praytimes/locale/praytimes.dtd">
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        id="monthly"
+        persist="screenX, screenY"   
+        onload="PrayTimes.options.monthDist = 0; PrayTimes.options.fillTimeTable();"
+        onunload=""  
+		style="width:370pt" 
+        title="Pray Times! Monthly Timetable">
+
+	<script type="application/x-javascript" src="chrome://praytimes/content/namespace.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/preference.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/misc.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/prayTime.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/options.js" />
+
+	<hbox class="window-header" style="padding:5px;" align="center">
+		<spacer flex="1"/>
+		<label value="&lt;&lt; " class="timetable-arrow" onclick="PrayTimes.options.monthDist--; PrayTimes.options.fillTimeTable();"/>
+		<label id="timetable-title" value="January 2007"/>
+		<label value=">>" class="timetable-arrow" onclick="PrayTimes.options.monthDist++; PrayTimes.options.fillTimeTable();"/>
+		<spacer flex="1"/>
+	</hbox>
+	<!--
+	<hbox align="center" style="border-bottom: 2px groove ThreeDFace">
+		<spacer flex="1"/>
+		<label value="Waterloo, On, Canada"/>
+		<spacer flex="1"/>
+	</hbox>
+	-->
+
+	<vbox class="window-content" flex="1">
+		<tree hidecolumnpicker="false" id="timetable-tree" rows="20" flex="1">
+			<treecols>
+				<treecol label="Date" class="timetable-item" primary="true" persist="hidden ordinal"/>
+				<treecol label="Fajr" class="timetable-item" primary="false" persist="hidden ordinal"/>
+				<treecol label="Sunrise" class="timetable-item" primary="false" persist="hidden ordinal"/>
+				<treecol label="Dhuhr" class="timetable-item" primary="false" persist="hidden ordinal"/>
+				<treecol label="Asr" class="timetable-item" primary="false" persist="hidden ordinal"/>
+				<treecol label="Sunset" class="timetable-item" primary="false" persist="hidden ordinal"/>
+				<treecol label="Maghrib" class="timetable-item" primary="false" persist="hidden ordinal"/>
+				<treecol label="Isha"  class="timetable-item" primary="false" persist="hidden ordinal"/>
+				<treecol label="" flex="1" primary="false" persist="hidden ordinal"/>
+			</treecols>
+			<treechildren id="prayer-times-tree" flex="1"/>
+		</tree>
+	</vbox>
+
+	<hbox align="center" style="color: #333333; border-top: 2px groove ThreeDFace">
+		<spacer flex="1"/>
+		<label value="Times are based on calculations only. Please add +/-2 minutes as precaution."/>
+		<spacer flex="1"/>
+	</hbox>
+
+	<hbox class="window-footer" align="center">
+		<spacer flex="1"/>
+		<button label="OK" default="true" oncommand="window.close();"/>
+		<spacer flex="1"/>
+	</hbox>
+
+	<keyset id="ff-keys">
+		<key keycode="VK_ESCAPE" oncommand="window.close();"/>
+	</keyset>
+
+</window>
+

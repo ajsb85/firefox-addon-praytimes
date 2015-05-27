@@ -1,0 +1,388 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://praytimes/content/css/azan.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://praytimes/locale/praytimes.dtd">
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	    xmlns:html="http://www.w3.org/1999/xhtml"
+        id="options"
+        persist="screenX, screenY"  
+        onload="PrayTimes.options.initOptionsDialog();"
+		onunload="PrayTimes.misc.getMainWindow().PrayTimes.Main.lastOptionsTab = document.getElementById('tab-box').selectedIndex;"
+		buttons="accept,cancel,extra1"
+		buttonlabelextra1="Apply"
+		style="padding: 10px"
+        title="Pray Times! Options">
+
+	<script type="application/x-javascript" src="chrome://praytimes/content/namespace.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/preference.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/misc.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/prayTime.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/options.js" />
+
+   <tabbox id="tab-box">
+      <tabs>
+         <tab label=" General "/>
+         <tab label=" Display "/>
+         <tab label=" Calculations "/>
+         <tab label=" Sound &amp; Alerts "/>
+         <tab label=" Advanced "/>
+      </tabs>
+
+      <tabpanels>
+
+		 <!--  General  -->
+		<tabpanel>
+			<vbox flex="1">
+
+				<groupbox orient="horizontal" align="center">
+				  <caption label="Location"/>
+				  <!--<label value="Current Location:"/>-->
+				  <textbox readonly="true" width="200" id="current-location" flex="1" onclick="PrayTimes.misc.openDialogWindow('location', true);" />
+				  <button label="Edit Location..." oncommand="PrayTimes.misc.openDialogWindow('location', true);"/>
+				</groupbox>
+
+				<groupbox>
+				  <caption label="Time Zone"/>
+				  <hbox align="center">
+					<radiogroup id="time-zone-group" orient="vertical">          
+					  <radio label="Auto Detect" value="true" oncommand="PrayTimes.options.dirty(); PrayTimes.options.toggleTimeZoneAuto(true);"/>
+					  <hbox align="center">
+					    <radio label="Specific" value="false" oncommand="PrayTimes.options.dirty(); PrayTimes.options.toggleTimeZoneAuto(false);"/> 
+						<menulist id="time-zone-list" oncommand="PrayTimes.options.dirty();">
+							<menupopup>
+							  <menuitem />
+							</menupopup>
+						</menulist>
+						<label class="remark" value="(Including daylight saving)"/>
+					  </hbox>
+					</radiogroup>
+				  </hbox>
+				</groupbox>
+
+				<!--
+				<groupbox>
+				  <caption label="Daylight Saving"/>
+				  <vbox>
+				  <hbox align="center">
+					<label value="Apply daylight saving:"/>
+					<menulist id="daylightSaving" oncommand="PrayTimes.options.dirty();">
+						<menupopup>
+						  <menuitem label="Auto" selected="true"/>
+						  <menuitem label="On"/> 
+						  <menuitem label="Off"/> 
+						</menupopup>
+					</menulist>
+				  </hbox>
+				  </vbox>
+				</groupbox>
+				-->
+
+			</vbox>
+         </tabpanel>
+
+         
+		 <!--  Display Options  -->
+         <tabpanel>
+			<vbox flex="1">
+			<vbox>
+			<hbox flex="1">
+				<vbox>
+
+					<groupbox flex="1" orient="vertical">
+					  <caption label="Show Times"/>
+					  <vbox id="show-azan-times-list" >
+						  <checkbox label="Fajr" oncommand="PrayTimes.options.dirty();"/>
+						  <!-- times are added by the script -->
+					  </vbox>
+					</groupbox>
+
+				</vbox>
+				<vbox flex="1">
+
+					<groupbox>
+					  <caption label="Display Mode"/>
+					  <row align="center">
+						<radiogroup id="display-mode-group" orient="vertical" oncommand="PrayTimes.options.dirty();">
+							<radio label="Show next prayer time" value="1"/>
+							<radio label="Countdown to the next prayer" value="2" selected="true"/>
+							<hbox align="center">
+								<radio label="Start countdown for each prayer in " value="3"/>
+								<menulist id="start-count-down" disabled="false" oncommand="PrayTimes.options.dirty(); this.parentNode.parentNode.selectedItem = this.parentNode.childNodes[0];">
+									<menupopup>
+										<menuitem label="5 minutes" value="5"/>
+										<menuitem label="10 minutes" value="10"/>
+										<menuitem label="15 minutes" value="15"/>
+										<menuitem label="30 minutes" value="30"/>
+										<menuitem label="45 minutes" value="45"/>
+										<menuitem label="60 minutes" value="60" selected="true"/>
+									</menupopup>
+								</menulist>
+							</hbox>
+						</radiogroup>
+					  </row>
+					</groupbox>
+
+					<groupbox flex="1" orient="vertical">
+					  <caption label="Countdown"/>
+						  <checkbox id="removeLeadingZeroHours" label="Don't show hour if it is zero" oncommand="PrayTimes.options.dirty();"/>
+						  <checkbox id="removeSecondsIfHours" label="Ignore seconds when more than 1 hour is remaining" oncommand="PrayTimes.options.dirty();"/>
+					</groupbox>
+
+				</vbox>
+			</hbox>
+			</vbox>
+			</vbox>
+         </tabpanel>
+
+
+		 <!--  Calculation Method  -->
+		 <tabpanel>
+			<vbox flex="1">
+
+				<groupbox orient="vertical">
+				  <caption label="Calculation Method"/>
+				  <grid>
+					<rows>
+						<row align="center">
+						<label class="azan-label" value="Method:"/>
+						<menulist id="calc-method" oncommand="PrayTimes.options.dirty(); PrayTimes.options.importMethodDefaults();">
+							<menupopup>
+							  <menuitem value="3" label="Muslim World League" selected="true"/> 
+							  <menuitem value="2" label="Islamic Society of North America (ISNA)"/> 
+							  <menuitem value="5" label="Egyptian General Organisation of Surveying"/> 
+							  <menuitem value="4" label="Umm Al-Qura University, Makkah"/> 
+							  <menuitem value="1" label="University of Islamic Sciences, Karachi"/> 
+							  <menuitem value="7" label="Institute of Geophysics, University of Tehran"/> 
+							  <menuitem value="0" label="Shia Ithna-Ashari, Leva Institute, Qum"/>
+							  <menuitem value="6" label="Custom Setting"/> 
+							</menupopup>
+						</menulist>
+						</row>
+
+						<row align="center">
+							<label value="Fajr:"/>
+							<hbox>
+								<textbox id="fajrAngle" size="4" oninput="PrayTimes.options.setCustom();"/>
+								<radiogroup orient="horizontal">          
+								  <radio label="degrees" value="0" selected="true"/> 
+								</radiogroup>	
+							</hbox>
+						</row>
+
+						<row align="center">
+							<label value="Maghrib:"/>
+							<hbox>
+								<textbox id="maghribAngleMinutes" size="4" oninput="PrayTimes.options.setCustom();"/>
+								<radiogroup id="maghribSelector" orient="horizontal" oncommand="PrayTimes.options.setCustom();">          
+								  <radio label="degrees" value="0" selected="true"/> 
+								  <radio label="minutes after Sunset" value="1"/>
+								</radiogroup>	
+							</hbox>
+						</row>
+
+						<row align="center">
+							<label value="Isha:"/>
+							<hbox>
+								<textbox id="ishaAngleMinutes" size="4" oninput="PrayTimes.options.setCustom();"/>
+								<radiogroup id="ishaSelector" orient="horizontal" oncommand="PrayTimes.options.setCustom();">          
+								  <radio label="degrees"  value="0" selected="true"/> 
+								  <radio label="minutes after Maghrib" value="1"/>
+								</radiogroup>	
+							</hbox>
+						</row>
+
+					</rows>
+				  </grid>
+				</groupbox>
+
+				<groupbox orient="vertical">
+				  <caption label="Other Settings"/>
+					<hbox align="center">
+						<label class="azan-label" value="Dhuhr:"/>
+						<textbox id="dhuhrMinutes" size="4" oninput="PrayTimes.options.dirty();"/>
+						<label value="minutes after mid-day"/>
+					</hbox>
+					<hbox align="center">
+						<label class="azan-label" value="Asr Juristic Method:"/>
+						<radiogroup id="asrJuristic" orient="horizontal" oncommand="PrayTimes.options.dirty();">          
+						  <radio label="Standard (Shafi'i)"  value="0" selected="true"/> 
+						  <radio label="Hanafi" value="1"/>
+						</radiogroup>	
+					</hbox>
+					<hbox align="center" style="margin-top: 2px;">
+						<label value="Adjustment for Higher Latitudes:"/>
+						<menulist id="adjustHighLats" oncommand="PrayTimes.options.dirty();">
+							<menupopup>
+							  <menuitem label="None"/>
+							  <menuitem label="Middle of Night" selected="true"/> 
+							  <menuitem label="One-Seventh of Night"/> 
+							  <menuitem label="Angle-Based"/> 
+							</menupopup>
+						</menulist>
+						<image src="chrome://praytimes/content/icons/help.png" class="azan-link" onclick="PrayTimes.misc.openNewWindow('http://praytimes.org/calculation/#Higher_Latitudes')"/>
+					</hbox>
+				</groupbox>
+
+				<!--				
+				<hbox pack="end">
+					<button label=" View Monthly Timetable... " oncommand="if (PrayTimes.prefs.getStrPref('location') != '') PrayTimes.misc.openDialogWindow('monthly');"/>
+				</hbox>
+				<hbox pack="end">
+					<label value="View Monthly Timetable..." class="azan-link" style="color:black" onclick="if (PrayTimes.prefs.getStrPref('location') != '') PrayTimes.misc.openDialogWindow('monthly');"/>
+					<label value=""/>
+				</hbox>
+				<label value=""/>
+				-->
+
+			</vbox>
+         </tabpanel>
+
+
+		 <!--  Sound & Notification  -->
+		 <tabpanel>
+			<vbox flex="1">
+
+				<groupbox orient="vertical">
+				  <caption label="Alerts"/>
+					  <hbox align="center">
+							<checkbox id="showPreNotification" label="Display an alert" oncommand="PrayTimes.options.dirty();"/>
+							<menulist id="preNotificationMinutes" style="margin: 0px;" oncommand="PrayTimes.options.dirty();">
+								<menupopup>
+									<menuitem label="5 " value="5"/>
+									<menuitem label="10" value="10"/>
+									<menuitem label="15" value="15" selected="true"/>
+									<menuitem label="20" value="20"/>
+									<menuitem label="25" value="25"/>
+									<menuitem label="30" value="30"/>
+								</menupopup>
+							</menulist>
+						  <label value="minutes before prayer times"/>
+					  </hbox>
+					  <checkbox id="showSliderNotification" label="Display a notification at prayer times" oncommand="PrayTimes.options.dirty();"/>
+					  <hbox hidden="false" align="center">
+						  <label value=" Notification Text:" style="margin-left: 25px"/>
+						  <textbox id="notificationText" size="35" oninput="PrayTimes.options.dirty();"/>
+					  </hbox>
+					  <!--
+					  -->
+				</groupbox>
+
+				<groupbox orient="vertical">
+				  <caption label="Sound"/>
+					  <hbox align="center">
+							<checkbox id="playSound" label="Play adhan at prayer times" oncommand="PrayTimes.options.dirty();"/>
+							<label class="remark" value="(needs Flash Player)"/>
+							<spacer flex="1" />
+					  </hbox>
+					  <hbox align="center">
+						    <!--<label value="Sound File:" />-->
+							<textbox id="sound-url" onkeypress="if (event.keyCode == event.DOM_VK_RETURN) PrayTimes.options.setSoundItem();" flex="1"/>
+							<button label=" Browse... "  style="margin:2px; min-width: 10px;" oncommand="PrayTimes.options.selectFile('sound-url');"/>
+
+					  </hbox>
+					  <hbox align="center">
+							<button label="  Play" style="margin:4px; min-width: 10px;" image="chrome://praytimes/content/icons/play-smg.png" oncommand="PrayTimes.options.playSound();"/>
+							<button label="  Stop" style="margin:4px; min-width: 10px;" image="chrome://praytimes/content/icons/stop-smg.png" oncommand="PrayTimes.options.stopSound();"/>
+							<label style="margin: 0px;" value="  Volume:"/> 
+							<menulist id="soundVolume" size="2" disabled="false" oncommand="PrayTimes.options.resetSound(); PrayTimes.options.dirty();">
+								<menupopup>
+									<menuitem label="10" />
+									<menuitem label="20" />
+									<menuitem label="30" />
+									<menuitem label="40" />
+									<menuitem label="50" />
+									<menuitem label="60" />
+									<menuitem label="70"/>
+									<menuitem label="80" selected="true" />
+									<menuitem label="90" />
+									<menuitem label="100" />
+								</menupopup>
+							</menulist>
+							<spacer flex="1"/>
+							<label value="Download More Adhans" class="azan-link" onclick="PrayTimes.misc.openNewWindow('http://praytimes.org/audio/');"/> 
+					  </hbox>
+					  <hbox align="center">
+							<html:iframe id="soundFrame" class="sound-object" src="chrome://praytimes/content/sound/soundFrame.html"/>
+					  </hbox>
+				</groupbox>
+
+			</vbox>
+		 
+		 </tabpanel>
+
+
+		<!--  Advanced Settings  -->
+		<tabpanel>
+			<vbox flex="1">
+
+				<groupbox orient="horizontal" align="center">
+				  <caption label="Display"/>
+					<vbox>
+						<hbox align="center">
+							<checkbox id="showOnStatusBar" label="Status bar" oncommand="PrayTimes.options.toggleShowTooltip(); PrayTimes.options.dirty();"/>
+							<menulist id="statusBarMode" oncommand="PrayTimes.options.dirty();">
+								<menupopup>
+								  <menuitem label="Icon and Text" selected="true"/>
+								  <menuitem label="Icon only"/> 
+								  <menuitem label="Text only"/> 
+								</menupopup>
+							</menulist>
+						</hbox>
+						<hbox align="center" id="navBarOptions">
+							<checkbox id="showOnNavBar" label="Navigation bar" oncommand="PrayTimes.options.toggleShowTooltip(); PrayTimes.options.dirty();"/>
+							<menulist id="navBarMode" oncommand="PrayTimes.options.dirty();">
+								<menupopup>
+								  <menuitem label="Icon and Text" selected="true"/>
+								  <menuitem label="Icon only"/> 
+								  <!--menuitem label="Text only"/--> 
+								</menupopup>
+							</menulist>
+						</hbox>
+					</vbox>
+				</groupbox>
+
+				<groupbox orient="horizontal" align="center">
+				  <caption label="Tooltip"/>
+					<vbox>
+						<hbox align="center">
+							<checkbox id="showTooltip" label="Enable tooltip" oncommand="PrayTimes.options.toggleShowTooltip(); PrayTimes.options.dirty();"/>
+						</hbox>
+						<checkbox id="showTooltipTimes" label="Show daily prayer times" style="margin-left: 25pt" oncommand="PrayTimes.options.dirty();"/>
+ 						<checkbox id="showTooltipTimeLeft" label="Show time left to next prayer time" style="margin-left: 25pt" oncommand="PrayTimes.options.dirty();"/>
+					</vbox>
+				</groupbox>
+
+				<groupbox>
+				  <caption label="Clock Format"/>
+				  <hbox align="center">
+					<radiogroup id="clockFormat" orient="horizontal">          
+					  <radio label="12-hour" selected="true" oncommand="PrayTimes.options.dirty();"/>
+					  <radio label="24-hour" oncommand="PrayTimes.options.dirty();"/> 
+					</radiogroup>
+				  </hbox>
+				</groupbox>
+
+			</vbox>
+         </tabpanel>
+	
+
+	  </tabpanels>
+	</tabbox>
+
+
+
+	<hbox style="padding: 10px 0px 0px" align="center">
+		<spacer flex="1"/>
+		<button label="OK" default="true" oncommand="PrayTimes.options.saveOptionsDialog(true);"/>
+		<button label="Cancel" oncommand="window.close();"/>
+		<button label="Apply" id="azan-options-apply" disabled="true" oncommand="PrayTimes.options.saveOptionsDialog(false);"/>
+	</hbox>
+
+	<keyset id="ff-keys">
+		<key keycode="VK_ESCAPE" oncommand="window.close();"/>
+	</keyset>
+
+</window>
+

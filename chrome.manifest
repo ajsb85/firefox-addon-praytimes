@@ -1,0 +1,6 @@
+content	praytimes	chrome/content/
+
+overlay	chrome://browser/content/browser.xul	chrome://praytimes/content/main.xul
+style chrome://global/content/customizeToolbar.xul chrome://praytimes/content/css/button.css
+
+locale	praytimes	en-US	chrome/locale/en-US/

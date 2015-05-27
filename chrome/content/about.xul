@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://praytimes/content/css/azan.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://praytimes/locale/praytimes.dtd">
+
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        id="about-window"
+        persist="screenX, screenY"   
+        onload="document.getElementById('version').value = 'version '+ PrayTimes.prefs.getStrPref('version');"
+        onunload=""    
+        title="About Pray Times!">
+
+	<script type="application/x-javascript" src="chrome://praytimes/content/namespace.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/preference.js" />
+	<script type="application/x-javascript" src="chrome://praytimes/content/misc.js" />
+
+	<hbox class="window-header" style="width: 250px;">
+		<vbox align="center">
+			<image src="chrome://praytimes/content/icons/azan.png" width="32" height="32" class="about-image"/>
+		</vbox>
+		<vbox align="start">
+			<label value="Pray Times!" class="about-header"/>
+			<label id="version" value="version 1.1" style="padding:0px;" />
+		</vbox>
+	</hbox>
+
+	<vbox class="window-content" flex="1">
+		<hbox>
+			<label value="By:"/>
+			<label value="Hamid Zarrabi-Zadeh" class="azan-link" style="margin-left: 0px;" onclick="PrayTimes.misc.openNewWindow('http://zarrabi.info/');"/> 
+		</hbox>
+		<hbox>
+			<label value="Website:"/>
+			<label value="PrayTimes.org" class="azan-link" style="margin-left: 0px;" onclick="PrayTimes.misc.openNewWindow('http://praytimes.org/');"/> 
+		<!--
+			<label value="See Also:"/>
+			<label value="Calculation Manual" class="azan-link" style="margin-left: 0px;" onclick="PrayTimes.misc.openNewWindow('http://praytimes.org/calculation/');"/> 
+		-->	
+		</hbox>
+	</vbox>
+
+
+	<hbox class="window-footer" align="center">
+		<button label="Contact.." oncommand="PrayTimes.misc.openDialogWindow('comment');"/>
+		<spacer flex="1"/>
+		<spacer flex="1"/>
+		<button label="Close" default="true" oncommand="window.close();"/>
+	</hbox>
+
+	<keyset id="ff-keys">
+		<key keycode="VK_ESCAPE" oncommand="window.close();"/>
+	</keyset>
+
+</window>
+
